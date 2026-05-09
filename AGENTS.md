@@ -15,51 +15,33 @@ Learning outcomes (paraphrased): understand modern computer architecture (pipeli
 
 ## Layout
 
-- `slides_original/` — source lecture slide decks as PDFs. Naming scheme:
-  - `COMP0008_XX_YY.pdf` — week `XX`, part `YY` (a single week's main lecture material may be split across multiple parts).
-  - `COMP0008_XX_pre_YY.pdf` — "pre-lecture" slides for week `XX`, part `YY`. **Functionally these are no different from the main lecture slides — they are simply additional material for the same week, separated for delivery reasons.** All `_pre_*` files for a given week belong together with that week's main `_YY` files.
-  - `COMP0008_XX.pdf` (no part suffix) — used when a week has only one main deck.
-  - `XX` is the (1-indexed, sometimes zero-padded) week number; `YY` is a part number within that grouping.
-- `slides_transcribed/` — destination for token-efficient markdown transcripts of the slide decks, one file per week. Empty until populated.
+- `slides_original/` — source lecture slide decks as PDFs (21 files across 10 weeks). **Do not read these directly** — use the transcripts instead (see below).
+- `slides_transcribed/` — **primary knowledge base.** Token-efficient, lossless markdown transcripts of the slide decks, one file per week (`week_01.md` through `week_10.md`). The concatenation of all 10 weeks is ~45–50k tokens, fitting comfortably in a single context window.
+- `book_excerpts/` — textbook chapter PDFs for weeks 6–10 essential/further readings, plus extracted topic lists. See `book_excerpts/README.md` for the per-week reading assignments and a condensed topic overview.
 - `.opencode/` — project-local agent and command definitions.
 
-The grouping by week is unambiguous from the filename. **Ordering within a week:** `_pre_*` decks come **first** (in part-number order), followed by the main `_YY` decks (in part-number order). I.e. for week 1 the canonical reading order is `COMP0008_01_pre_1.pdf`, `COMP0008_01_pre_2.pdf`, then `COMP0008_01.pdf`.
+### Preprocessed materials — how to use them
 
-## Why transcripts?
+The original lecture slides (PDFs) have been **pre-processed into markdown transcripts** because PDFs are token-inefficient and perform poorly under both direct ingestion and retrieval. The transcripts in `slides_transcribed/` are faithful, lossless representations of the slide content — all technical detail, definitions, code, equations, and diagrams (described in prose) are preserved.
 
-PDF slide decks are token-inefficient and perform poorly under both direct ingestion and retrieval. The plan is to pre-process all weeks into dense, lossless markdown transcripts so that the concatenation of all weeks fits comfortably in a single context window for downstream Q&A and artefact generation.
+**When answering questions or producing artefacts about the module content, read the markdown transcripts in `slides_transcribed/`, not the original PDFs.** The transcripts are the authoritative working copy of the lecture material for agent use.
+
+For the concurrency half (weeks 6–10), the lectures are supplemented by essential readings from two textbooks. The slides are **not self-contained** for these weeks. Topic overviews of the readings are in `book_excerpts/README.md`; detailed per-chapter topic extractions are in `book_excerpts/*_topics.md`.
+
+### Source file naming (for reference only)
+
+The original PDFs in `slides_original/` follow this naming scheme:
+
+- `COMP0008_XX_YY.pdf` — week `XX`, part `YY`.
+- `COMP0008_XX_pre_YY.pdf` — "pre-lecture" slides for week `XX`, part `YY` (functionally identical to main slides, just delivered separately).
+- `COMP0008_XX.pdf` — used when a week has only one main deck.
+
+Ordering within a week: `_pre_*` decks first (in part-number order), then main `_YY` decks (in part-number order).
 
 ## Transcription workflow
 
-Use the **transcriber** subagent to convert one week's slide set into one markdown file. It is generic — it takes an ordered list of source documents, an output path, and optional free-form context, and produces a single dense markdown transcript. See `.opencode/agents/transcriber.md` for the full contract.
+The transcripts were produced by a generic **transcriber** subagent (`.opencode/agents/transcriber.md`). It takes an ordered list of source documents, an output path, and optional context, and produces a single dense markdown transcript. See the agent file for the full contract. There is also a `/transcribe` slash command for human use.
 
-To invoke it, use the `task` tool with `subagent_type: "transcriber"`. Each call's `prompt` must convey three pieces of information:
+This is a one-time preprocessing step — the transcripts are already populated. The workflow is documented here for reproducibility (e.g. if slides are updated or new weeks are added).
 
-1. **Output path** for the markdown transcript (e.g. `slides_transcribed/week_NN.md`).
-2. **Ordered list of source document paths**, with the order being authoritative — the subagent reads them in exactly that order and treats that as the canonical reading sequence.
-3. **Free-form context** explaining anything the subagent needs to make sense of the inputs: module name, what each file is, why they're in that order (e.g. "the `_pre_*` decks are pre-reading and come before the main deck"), terminology conventions, style preferences, etc.
-
-Example prompt for a single `task` call:
-
-```
-Output path: slides_transcribed/week_01.md
-
-Source documents (read in this order):
-1. slides_original/COMP0008_01_pre_1.pdf
-2. slides_original/COMP0008_01_pre_2.pdf
-3. slides_original/COMP0008_01.pdf
-
-Context: Module COMP0008 (UCL), week 1. The _pre_* decks are pre-reading
-material that comes before the main deck. Use British spelling.
-```
-
-To process multiple weeks in parallel, issue multiple `task` calls in a single assistant message — opencode will run them concurrently as independent sessions. The subagent is leaf-level (it does not spawn further subagents).
-
-The subagent knows nothing about COMP0008, weeks, or this project's filename conventions. **It is the orchestrator's responsibility to spell out clearly in each prompt** which files belong together, in what order, and what they are.
-
-(There is also a `/transcribe` slash command — `.opencode/commands/transcribe.md` — for humans to invoke a single transcription run directly from the CLI without going through a primary agent. Agents themselves do not use slash commands; they dispatch via the `task` tool as above.)
-
-## Conventions (to be confirmed through use)
-
-- Transcript filenames: `slides_transcribed/week_NN.md` (zero-padded).
-
+There is also a **transcription skill** (`.opencode/skills/transcription/SKILL.md`) that provides a decision framework for when and how to pre-process token-heavy documents. Load it when considering whether new material should be transcribed before use.
