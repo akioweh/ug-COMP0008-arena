@@ -146,7 +146,7 @@ A single markdown file written to the provided output path:
 
 - One `# H1` for the whole transcript (a title inferred from the inputs, or from caller context).
 - Use `##` / `###` to reflect the **logical flow of the material**, not the slide-by-slide layout. A single concept that spans 5 slides becomes one sub-section, not five. **The transcript should rarely if ever be organised one-section-per-slide** — that defeats the purpose. The exception is when the slide-level structure is itself meaningful (e.g. a numbered worked example where each step is an independent slide); reflect such meta-structure when present.
-- The `> Source:` line at the top lists every input file in the given order as **relative markdown links** using the paths provided by the orchestrator. Escape underscores in the display text so they render correctly. Example: `> Source: [COMP0008\_01\_pre\_1.pdf](slides_original/COMP0008_01_pre_1.pdf), [COMP0008\_01.pdf](slides_original/COMP0008_01.pdf)`.
+- The `> Source:` line at the top lists every input file in the given order as **relative markdown links** using the paths provided by the orchestrator. Escape underscores in the display text so they render correctly. Example: `> Source: [deck\_1.pdf](path/to/deck_1.pdf), [deck\_2.pdf](path/to/deck_2.pdf)`.
 - The trailing `<!-- transcription-audit -->` HTML comment is mandatory.
 
 ---
