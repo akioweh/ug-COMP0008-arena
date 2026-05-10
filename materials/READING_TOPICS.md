@@ -1,6 +1,6 @@
-# Textbook References
+# Reading list and topics
 
-The concurrency half of the module (weeks 6–10) is designed around essential readings from two textbooks. The lecture slides for these weeks are **not self-contained** — they assume the student has completed the assigned reading. Week 6 draws on the architecture textbook (Patterson & Hennessey) for processor/cache foundations; weeks 7–10 draw on the concurrency textbook (Goetz et al.) for Java concurrency theory and practice.
+Companion to `ALL_SLIDES.md` for the concurrency half of the module. The lecture slides for weeks 6–10 are **not self-contained** — they assume the student has completed the essential readings from two textbooks. Week 6 draws on the architecture textbook (Patterson & Hennessey) for processor/cache foundations; weeks 7–10 draw on the concurrency textbook (Goetz et al.) for Java concurrency theory and practice. The architecture half (weeks 1–5) is covered fully by the slides.
 
 ---
 
@@ -121,20 +121,3 @@ Essential readings: GPBBHL 10
 - Open calls as the primary design principle for deadlock avoidance
 - Deadlock avoidance and diagnosis: consistent lock ordering, timed `tryLock` with back-off, JVM thread dumps with automatic cycle detection
 - Other liveness hazards: starvation (thread priorities), poor responsiveness (long-held locks), livelock (poison messages, cooperative retry loops, randomised back-off)
-
----
-
-## Extracted topic lists (detailed)
-
-Per-chapter topic extractions (from the PDFs in this directory):
-
-- [PH\_ch\_4\_topics.md](PH_ch_4_topics.md), [PH\_ch\_5\_topics.md](PH_ch_5_topics.md)
-- [GPBBHL\_ch\_1\_topics.md](GPBBHL_ch_1_topics.md), [GPBBHL\_ch\_2\_topics.md](GPBBHL_ch_2_topics.md), [GPBBHL\_ch\_3\_topics.md](GPBBHL_ch_3_topics.md), [GPBBHL\_ch\_4\_topics.md](GPBBHL_ch_4_topics.md), [GPBBHL\_ch\_10\_topics.md](GPBBHL_ch_10_topics.md), [GPBBHL\_ch\_14\_topics.md](GPBBHL_ch_14_topics.md), [GPBBHL\_ch\_16\_topics.md](GPBBHL_ch_16_topics.md)
-
-Per-week reading topic lists (consolidated from the above by the week's assigned sections):
-
-- [week\_06\_reading\_topics.md](week_06_reading_topics.md)
-- [week\_07\_reading\_topics.md](week_07_reading_topics.md)
-- [week\_08\_reading\_topics.md](week_08_reading_topics.md)
-- [week\_09\_reading\_topics.md](week_09_reading_topics.md)
-- [week\_10\_reading\_topics.md](week_10_reading_topics.md)
