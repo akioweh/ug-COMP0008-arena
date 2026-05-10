@@ -17,7 +17,7 @@ Learning outcomes (paraphrased): understand modern computer architecture (pipeli
 
 - `materials/` — **the default reading bundle.** Everything needed for general module knowledge. Sized to fit in one context window. See "Default behaviour" below.
 - `meta/` — workflows and conventions for tasks that maintain or extend the project itself (see "Meta tasks" below).
-- `.opencode/` — project-local agent and command definitions.
+- There may be loose files at the root level. Without specific instructions, there is no need to proactively read them.
 
 ## Default behaviour
 
