@@ -1,4 +1,4 @@
-> Source: [COMP0008\_01\_pre\_1.pdf](slides_original/COMP0008_01_pre_1.pdf), [COMP0008\_01\_pre\_2.pdf](slides_original/COMP0008_01_pre_2.pdf), [COMP0008\_01.pdf](slides_original/COMP0008_01.pdf)
+> Source: [COMP0008\_01\_pre\_1.pdf](../slides_original/COMP0008_01_pre_1.pdf), [COMP0008\_01\_pre\_2.pdf](../slides_original/COMP0008_01_pre_2.pdf), [COMP0008\_01.pdf](../slides_original/COMP0008_01.pdf)
 
 # Week 1 — Introduction to Computer Architecture and Concurrency
 

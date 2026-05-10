@@ -1,4 +1,4 @@
-> Source: [COMP0008\_04.pdf](slides_original/COMP0008_04.pdf)
+> Source: [COMP0008\_04.pdf](../slides_original/COMP0008_04.pdf)
 
 # High-Level Language Constructs in MIPS Assembly
 

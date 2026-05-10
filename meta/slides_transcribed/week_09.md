@@ -1,4 +1,4 @@
-> Source: [COMP0008\_09.pdf](slides_original/COMP0008_09.pdf)
+> Source: [COMP0008\_09.pdf](../slides_original/COMP0008_09.pdf)
 
 # Week 9 — Visibility, Publication, and the Monitor Pattern
 

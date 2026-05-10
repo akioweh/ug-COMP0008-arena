@@ -1,4 +1,4 @@
-> Source: [COMP0008\_06\_1.pdf](slides_original/COMP0008_06_1.pdf), [COMP0008\_06\_2.pdf](slides_original/COMP0008_06_2.pdf)
+> Source: [COMP0008\_06\_1.pdf](../slides_original/COMP0008_06_1.pdf), [COMP0008\_06\_2.pdf](../slides_original/COMP0008_06_2.pdf)
 
 # Week 6: Introduction to Concurrency — Executing MIPS Code in a Single-Core Processor
 

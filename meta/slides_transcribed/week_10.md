@@ -1,4 +1,4 @@
-> Source: [COMP0008\_10.pdf](slides_original/COMP0008_10.pdf)
+> Source: [COMP0008\_10.pdf](../slides_original/COMP0008_10.pdf)
 
 # Week 10 — Liveness
 

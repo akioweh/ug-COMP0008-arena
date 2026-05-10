@@ -1,4 +1,4 @@
-> Source: [COMP0008\_08.pdf](slides_original/COMP0008_08.pdf)
+> Source: [COMP0008\_08.pdf](../slides_original/COMP0008_08.pdf)
 
 # Week 8 — Thread Safety, Synchronisation, and Locking in Java
 

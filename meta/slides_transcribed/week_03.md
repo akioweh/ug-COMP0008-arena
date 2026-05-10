@@ -1,4 +1,4 @@
-> Source: [COMP0008\_03\_pre\_1.pdf](slides_original/COMP0008_03_pre_1.pdf), [COMP0008\_03\_1.pdf](slides_original/COMP0008_03_1.pdf), [COMP0008\_03\_2.pdf](slides_original/COMP0008_03_2.pdf)
+> Source: [COMP0008\_03\_pre\_1.pdf](../slides_original/COMP0008_03_pre_1.pdf), [COMP0008\_03\_1.pdf](../slides_original/COMP0008_03_1.pdf), [COMP0008\_03\_2.pdf](../slides_original/COMP0008_03_2.pdf)
 
 # MIPS32 Processor — ISA and Instructions
 

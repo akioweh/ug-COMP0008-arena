@@ -1,4 +1,4 @@
-> Source: [COMP0008\_02\_pre\_1.pdf](slides_original/COMP0008_02_pre_1.pdf), [COMP0008\_02\_pre\_2.pdf](slides_original/COMP0008_02_pre_2.pdf), [COMP0008\_02\_1.pdf](slides_original/COMP0008_02_1.pdf), [COMP0008\_02\_2.pdf](slides_original/COMP0008_02_2.pdf)
+> Source: [COMP0008\_02\_pre\_1.pdf](../slides_original/COMP0008_02_pre_1.pdf), [COMP0008\_02\_pre\_2.pdf](../slides_original/COMP0008_02_pre_2.pdf), [COMP0008\_02\_1.pdf](../slides_original/COMP0008_02_1.pdf), [COMP0008\_02\_2.pdf](../slides_original/COMP0008_02_2.pdf)
 
 # Week 2: Abstracting the Machine and MIPS32 Fundamentals
 

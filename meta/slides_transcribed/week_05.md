@@ -1,4 +1,4 @@
-> Source: [COMP0008\_05\_pre\_1.pdf](slides_original/COMP0008_05_pre_1.pdf), [COMP0008\_05\_pre\_2.pdf](slides_original/COMP0008_05_pre_2.pdf), [COMP0008\_05\_1.pdf](slides_original/COMP0008_05_1.pdf), [COMP0008\_05\_2.pdf](slides_original/COMP0008_05_2.pdf)
+> Source: [COMP0008\_05\_pre\_1.pdf](../slides_original/COMP0008_05_pre_1.pdf), [COMP0008\_05\_pre\_2.pdf](../slides_original/COMP0008_05_pre_2.pdf), [COMP0008\_05\_1.pdf](../slides_original/COMP0008_05_1.pdf), [COMP0008\_05\_2.pdf](../slides_original/COMP0008_05_2.pdf)
 
 # Week 5 — GCC Toolchain, System Calls, and Basic Data Types
 
