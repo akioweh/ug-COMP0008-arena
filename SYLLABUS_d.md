@@ -49,7 +49,7 @@ The module is split 5/5 between **Computer Architecture** (weeks 1–5) and **Co
 
 - **Bus hierarchy.** Backside bus (CPU↔cache), external CPU bus, PCI bridge, AGP, ISA. Programmer sees a simpler abstract view: CPU + Memory + I/O via address/data/control buses.
 
-- **MIPS32 basics.** 32 general-purpose registers ($0–$31), $0 hardwired to 0. Load/store architecture: all ALU ops on registers only; memory access only via `lw`/`sw`. Fixed 32-bit instructions. 6-bit opcode, 26-bit arguments.
+- **MIPS32 basics.** 32 general-purpose registers (\$0–\$31), \$0 hardwired to 0. Load/store architecture: all ALU ops on registers only; memory access only via `lw`/`sw`. Fixed 32-bit instructions. 6-bit opcode, 26-bit arguments.
 
 - **R-type format.** `opcode(6) | rs(5) | rt(5) | rd(5) | shamt(5) | funct(6)`. `R[rd] = func(R[rs], R[rt])`. Opcode = `000000`. Examples: `add` (funct=0x20), `sub` (0x22), `and` (0x24), `or` (0x25), `xor` (0x26), `nor` (0x27), `slt` (0x2A), `sltu` (0x2B).
 
@@ -125,7 +125,7 @@ The module is split 5/5 between **Computer Architecture** (weeks 1–5) and **Co
 
 - **Epilogue:** `lw saved regs; lw $ra; lw $fp; addiu $sp, $sp, N; jr $ra`.
 
-- **$ra overwrite bug.** Nested `jal` overwrites `$ra` before old value is saved → infinite loop on return. Fix: save `$ra` to stack before nested call, restore after.
+- **\$ra overwrite bug.** Nested `jal` overwrites `$ra` before old value is saved → infinite loop on return. Fix: save `$ra` to stack before nested call, restore after.
 
 ---
 
@@ -344,7 +344,7 @@ The module is split 5/5 between **Computer Architecture** (weeks 1–5) and **Co
 - **Two's complement**: W1 (definition) → W2 (overflow, extension) → W3 (sign-extension in `addi`/`lw`)
 - **Endianness**: W1 (definition) → W2 (type-casting effects) → W5 (UTF-8/Unicode BOM)
 - **Memory layout**: W2 (byte/word addressable) → W4 (stack/heap/text) → W5 (full map with kernel space)
-- **Registers**: W2 (GPR set) → W3 ($0 as zero) → W4 (convention: $t, $s, $a, $v, $ra, $sp, $fp)
+- **Registers**: W2 (GPR set) → W3 (\$0 as zero) → W4 (convention: \$t, \$s, \$a, \$v, \$ra, \$sp, \$fp)
 - **Pipeline → cache → coherence → reordering**: W6 progression from HW to programmer implications
 - **Safety vs liveness**: W8 (race conditions = safety) → W10 (deadlock/starvation/livelock = liveness)
 - **Visibility**: W1 (Holder/Terminator puzzles preview) → W6 (hardware caching cause) → W9 (JMM formal solution)
