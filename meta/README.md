@@ -10,6 +10,10 @@ Each material type has a pair of folders: **originals → extracted/transcribed 
 - `slides_transcribed/` — faithful, lossless markdown transcripts of the slides. Also contains `ERRORS.md`, a registry of known errors, inconsistencies, and inaccuracies in the **source slides themselves** (not transcription errors), discovered during audit. Each entry records severity, source location, and whether it is flagged inline in the corresponding transcript.
 - `books/` — original textbook chapters (PDFs).
 - `books_topics/` — extracted per-chapter and per-week topic lists distilled from the readings.
+- `past_papers/` — original past exam papers (PDFs): `COMP0008_2023.pdf`, `COMP0008_2024.pdf`, `COMP0008_2025.pdf`.
+- `past_papers_transcribed/` — markdown transcripts of the past papers. One file per year; each faithfully preserves all questions, sub-questions, mark allocations, code listings, and answer templates. **Prefer these over the originals.**
+- `exercise_sheets/` — original formative coursework question sheets and model answers (PDFs): `CW1.pdf`–`CW6.pdf` and `CW1_answers.pdf`–`CW6_answers.pdf`.
+- `exercise_sheets_transcribed/` — markdown transcripts of the exercise sheets. One file per CW (`CW1.md`–`CW6.md`), each combining the question sheet and model answers into a single document with clear question/answer separation. **Prefer these over the originals.**
 
 The consolidated bundles in `materials/` are derived from these.
 
