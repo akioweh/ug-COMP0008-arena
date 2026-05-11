@@ -42,7 +42,7 @@ Use the following assumptions when reasoning about concurrency on the exam, to h
 A runnable thread may be starved indefinitely by other runnable threads. Liveness arguments must not rely on round-robin
 or any other fair-scheduling discipline.
 
-**Source:** Moodle announcement forum post / email.
+**Source:** trust me bro.
 
 ### No Spurious Wakeups
 
