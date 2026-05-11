@@ -115,8 +115,8 @@ Despite its name, `addiu` is used to add constants to signed integers when overf
 **Exercise:** What is the value of `$8` after executing:
 
 ```mips
-addiu $0, $0, 5      # no effect — $0 is hardwired to 0
 addiu $8, $0, 5      # $8 = 0 + 5 = 5
+addiu $0, $0, 5      # no effect — $0 is hardwired to 0
 addiu $8, $8, 0xFFFF # depends on assembler interpretation
 ```
 
@@ -161,7 +161,7 @@ Both require the effective address to be **word-aligned** (divisible by 4).
 - `lb`/`sb` — load/store byte.
 - `lh`/`sh` — load/store half-word (must be **half-word aligned**, i.e. address divisible by 2).
 - These are **sign-extended** when loaded into a register.
-- Unsigned (zero-extended) variants: `lbu`, `lhu`, `sbu`, `shu`.
+- Unsigned (zero-extended) variants: `lbu`, `lhu`, `sbu`, `shu`. <!-- suspected-source-error: The slide lists sbu/shu, but MIPS has no unsigned store-byte or store-halfword instructions — sign/zero extension only applies to loads. sb and sh simply truncate the register value. -->
 
 ### Loading Large Constants
 
@@ -323,6 +323,6 @@ addu $10, $10, $11     # $10 = (x & y) + (x ^ y) / 2 = average
 - Dropped: 03_2 p10 — lecture summary slide (content captured in structure)
 - Dropped: pre_1 p2-3 overview/roadmap slides — content integrated into "Roadmap" section
 - Warnings: The branching instruction example (03_1 p11) involves a memory layout diagram with PC-relative addressing. The spatial relationships of the memory table and arrows are approximated in prose. The original slide's colour-coded bit-field breakdowns (red opcode, green rs/rt, yellow immediate) throughout 03_1 are flattened to labelled text fields.
-- Suspected source errors: The branch target calculation on 03_1 p11 may be inconsistent with the memory layout shown — see inline comment.
+- Suspected source errors: (1) The branch target calculation on 03_1 p11 may be inconsistent with the memory layout shown — see inline comment. (2) The slide on 03_1 p6 lists sbu/shu as MIPS instructions, but these do not exist in the MIPS ISA — see inline comment.
 - Ambiguities: (1) The pre_1 slides (from Kevin Bryson) and the 03_1/03_2 slides (different visual style, likely a different lecturer) overlap in content; the recap on 03_1 p2 summarises material from pre_1. Merged without duplication. (2) The "addiu $8, $8, 0xFFFF" exercise answer of 4 is presented as correct on the slide, but the explanation acknowledges that MARS would give 65540 for the literal 0xFFFF — transcribed both interpretations faithfully. (3) 03_2 slides have non-sequential page numbers (p3,4 then p5=slide 8, p6=slide 12, etc.) — these are slide numbers from the original deck; transcribed by content not by number.
 -->

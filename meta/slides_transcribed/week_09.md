@@ -219,6 +219,16 @@ public class ConfigSettings {
 ```
 
 Locking ensures visibility but has an impact on performance and interface design.
+<!-- suspected-source-error: slide 31 presents this as "safely publish via lock" (idiom 4:
+"store a reference into a field that is properly guarded by a lock"), but the field is NOT
+properly guarded — the write to `holder` in the constructor is unsynchronized while only the
+read in `GetHolder()` is synchronized. The JMM monitor-lock rule requires a matched
+unlock-then-lock sequence on the SAME monitor: since the constructor never acquires the
+intrinsic lock, there is no happens-before edge from the constructor's write to a reader's
+synchronized read. The code's actual safety depends on how the `ConfigSettings` object itself
+is published to other threads (e.g., via Thread.start() or a volatile field), making the
+`synchronized` on GetHolder() redundant for publication. A correct lock-based safe publication
+would require the write to also be guarded by the same lock. Transcribed verbatim. -->
 
 ## Design Patterns for Concurrency
 
@@ -304,9 +314,9 @@ Methods:
 - Additionally, the **lock object must be the same as the condition queue object** (i.e., `this.wait()` makes a thread wait until `this.notifyAll()` is called).
 - Think in terms of **entry and exit protocols**.
 
-## Essential Reading
+## Additional Content
 
-The slides for this week are not self-contained. The following essential reading supplements the lecture material:
+The following reading supplements the lecture material:
 
 - Additional examples of monitors and conditional synchronisation — available on Moodle.
 - Proper use of conditional synchronisation — GPBBHL 14.2.
@@ -319,7 +329,7 @@ The slides for this week are not self-contained. The following essential reading
 - Dropped: slide 2 — warmup/housekeeping (Mentimeter poll, no technical content)
 - Dropped: slides 17–23 — intermediate build-up states of the object-type table (final state on slide 24 captured in full)
 - Dropped: slide 32 — image of "Design Patterns" book cover (decorative; the textual content is preserved)
-- Dropped: slides 11, 13 — intermediate build-up of the Holder example (content merged into the unified Holder section)
+- Dropped: slides 11–13 — multi-slide build-up of the Holder example (content merged into the unified Holder section)
 - Dropped: angry-face emoji icons on slides 6, 7, 11, 12, 13, 26 — decorative
 - Warnings:
   - Slide 10: Synchronisation visibility diagram rendered as prose description in an HTML comment. The diagram shows two thread timelines with lock/unlock of monitor M and an arrow indicating the visibility guarantee. Spatial layout is approximated; recommend retaining original slide if precise visual is needed.
@@ -327,5 +337,7 @@ The slides for this week are not self-contained. The following essential reading
   - "AssertionError" appears on the slides as written and matches Java's standard `java.lang.AssertionError` class. No error.
   - Slides 17–24 are a progressive build-up of a single table. Only the final completed table (slide 24) is transcribed; intermediate annotations (e.g., "not shared", "unmodifiable state, all fields are final, properly constructed", "state doesn't change after publication", "state changes over time, and multiple threads may read or write it") are incorporated into the table as clarifying text.
   - The ordering of sections was reorganised for logical flow: the Holder example (slides 11–13) is presented after the publication/safe-publication definitions rather than before, since the definitions provide necessary context. The fixes (slides 26–31) follow immediately.
-- Suspected source errors: none confirmed. "AssertionError" matches Java's standard class name.
+- Suspected source errors:
+  - Slide 31 (Option 2d: safely publish via lock): The code only synchronizes the getter (`GetHolder()`), not the write in the constructor. The field `holder` is therefore not "properly guarded by a lock" as required by safe publication idiom 4 — the JMM monitor-lock rule needs a matched unlock→lock on the same monitor, but the constructor never acquires the lock. The example's safety actually depends on how `ConfigSettings` itself is published, making the synchronized getter redundant for publication purposes. See inline comment for full analysis.
+  - "AssertionError" matches Java's standard class name — not an error.
 -->

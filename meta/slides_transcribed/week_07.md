@@ -14,7 +14,7 @@ Consider implementing a server supporting web-accessible functionalities where m
 
 A monolithic program can be written and executed by the operating system as a single **process**. Behind the scenes, the OS allocates resources (code, data, files, registers, stack) to run the process separately from others on the server.
 
-**Problem:** In production, users complain the application is very slow and blocks at times — yet the network is not the bottleneck, there is no server crash, and no major bug in the code. A minimal reproduction confirms high computation times:
+**Problem:** In production, users complain the application is very slow and blocks at times — yet the network is not the bottleneck, there is no server crash <!-- suspected-source-error: slides say "server crush", likely typo for "crash" -->, and no major bug in the code. A minimal reproduction confirms high computation times:
 
 ```
 $ java SimulateServer
@@ -180,4 +180,5 @@ For this reason, the module focuses on reading and reasoning about concurrent co
 - Warnings: Slides 31–34 use colour-coded blocks (light-green, dark-green for Thread 1; light-blue, dark-blue for Thread 2) to illustrate interleaving visually. The spatial/colour semantics have been described in prose but the visual immediacy is lost. The original asset may be worth retaining if the visual is pedagogically important.
 - Ambiguities: Slide 26 shows a screenshot of the Python `threading` documentation page including GIL details and PEP 703 reference. Transcribed the substantive content rather than describing the screenshot. The slide's intent appears to be showing that Python's threading docs themselves warn about the GIL limitation.
 - Ambiguities: Slide 52 shows interleaving results x=2, x=4, x=7 with abbreviated interleaving descriptions (e.g. "s=0; T1; x=s+2"). Transcribed faithfully as presented; the initial value of x before T1 and T2 start is implicitly 0 (used in s=0 derivation).
+- Suspected source errors: Slide 9 says "server crush" — likely a typo for "server crash". Corrected in transcription and flagged inline.
 -->

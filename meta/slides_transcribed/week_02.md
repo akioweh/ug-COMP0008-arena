@@ -78,7 +78,7 @@ MIPS32 processors appear in modern embedded devices:
 
 ### The ISA as an Abstraction Layer
 
-The **Instruction Set Architecture (ISA)** hides the hardware from the software. A high-level statement like `i = i + 1;` in C compiles to MIPS assembly (`add $s3,$s3,1`) which in turn corresponds to a 32-bit machine code word (`001000 01011 01011 0000000000000001`). The ISA sits at the boundary between software and hardware in a layered abstraction:
+The **Instruction Set Architecture (ISA)** hides the hardware from the software. A high-level statement like `i = i + 1;` in C compiles to MIPS assembly (`add $s3,$s3,1` <!-- suspected-source-error: the slide labels this "add" but the binary encoding below has opcode 001000 = 0x08, which is "addi" (Add Immediate), not "add" (R-type, opcode 0). The correct mnemonic for this encoding is "addi $s3,$s3,1". -->) which in turn corresponds to a 32-bit machine code word (`001000 01011 01011 0000000000000001`). The ISA sits at the boundary between software and hardware in a layered abstraction:
 
 | Level | Name | Examples |
 |---|---|---|
@@ -242,7 +242,7 @@ R-type instructions have opcode `000000`. The remaining 26 bits are divided into
 |---|---|---|---|---|---|---|
 | Bits | 6 | 5 | 5 | 5 | 5 | 6 |
 
-The operation is `R[rd] = func(R[rs], R[rt])`, where `funct` specifies the particular operation.
+The operation is `R[rd] = func(R[rs], R[rt])` <!-- suspected-source-error: the slide writes R[rd]=func(R[rt],R[rs]) with rt before rs, but the standard MIPS convention (and the reference card shown in the same lecture) is R[rd] = R[rs] op R[rt]. The transcript uses the standard order. -->, where `funct` specifies the particular operation.
 
 **Example — `add $8, $1, $2`:**
 
@@ -392,4 +392,6 @@ Both produce the same result. The first sequence assembles to: `0x00855022`, `0x
   - The MIPS reference card (02_2 slide 7) from Patterson and Hennessy contains extensive instruction listings. Only the R-type instructions discussed in the lecture are captured in the summary table.
 - Suspected source errors:
   - pre_2 slide 4: "Jurrasic Park" appears to be a misspelling of "Jurassic Park". Corrected in transcript as it is clearly a typo.
+  - pre_2 slide 9 / slide 11: The slide labels the assembly instruction as "add $s3,$s3,1" but the binary encoding shown (001000 01011 01011 0000000000000001) has opcode 001000 = addi, not add. The correct mnemonic is "addi $s3,$s3,1". Flagged inline.
+  - 02_2 slide 8: The slide writes R[rd]=func(R[rt],R[rs]) with rt before rs, but the standard MIPS convention is R[rd] = R[rs] op R[rt]. The transcript uses the standard order. Flagged inline.
 -->

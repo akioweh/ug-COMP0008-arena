@@ -2,7 +2,7 @@
 
 # Week 10 — Liveness
 
-Essential reading: GPBBHL chapter 10.
+References: GPBBHL chapter 10.
 
 ## Concurrency Recap: Safety Is Not Enough
 

@@ -374,7 +374,7 @@ Within the function body, `$s0` and `y` can be used freely. The argument `y` is 
 lw    $ra, 16($sp)        # restore return address
 lw    $fp, 12($sp)        # restore old frame pointer
 lw    $s0,  4($sp)        # restore $s0
-addiu $sp, $sp, 20        # deallocate stack frame
+addiu $sp, $sp, 20        # deallocate stack frame  <!-- suspected-source-error: original slide writes "addiu," with a stray comma after the opcode -->
 jr    $ra                 # return
 ```
 
@@ -421,4 +421,6 @@ The key fix: `$ra` is saved to the stack before the nested `jal abs_diff` and re
   - Slides 18–19 (p18–p19) present function-calling register conventions in two separate tables. Merged and reorganised for clarity.
   - The slide numbering in the PDF is non-contiguous (jumps from slide 14 to 16, from 22 to 23, etc.) — likely due to removed/hidden slides. Transcribed all visible content.
   - p7 slide title uses stylised "J-ump" (italic J, hyphenated). Normalised to standard text.
+- Suspected source errors:
+  - p29 (slide 33): Epilogue code writes `addiu,` with a stray comma after the opcode (should be `addiu`). Flagged inline.
 -->

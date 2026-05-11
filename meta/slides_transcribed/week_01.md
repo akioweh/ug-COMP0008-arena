@@ -206,6 +206,7 @@ Early electronic computers experimented with different number bases. ENIAC 1 use
 | Performance (commercial) | 29,000 IPS | 75,000 IPS | 169,000 IPS | 567,000 IPS |
 | Performance (scientific) | 10,200 IPS | 40,000 IPS | 133,000 IPS | 563,000 IPS |
 | Price (1964 $) | $192,000 | $216,000 | $460,000 | $1,080,000 |
+| Price (2018 $) | $1,560,000 | $1,760,000 | $3,720,000 | $8,720,000 |
 
 - **Intel 4004** — the first microprocessor on a single chip, used in the Busicom 141-PF calculator.
 - **Intel 8088** — 16-bit processor used in the original IBM PC.
@@ -418,5 +419,5 @@ $0b\,0100\,1000\,0110\,1001$:
 - Suspected source errors:
   - pre_1 slide 2: "parallism" appears twice (should be "parallelism"). Corrected in transcript as this is clearly a typo.
   - pre_2 slide 16: "Jurrasic" (should be "Jurassic"). Corrected in transcript.
-  - pre_2 slide 22: The MIPS instruction shown is `add $s3,$s3,1` but the opcode in the binary encoding is `001000` which is actually the `addi` (add immediate) opcode, not `add` (which is `000000` with funct `100000`). The assembly mnemonic and the binary encoding are inconsistent.
+  - pre_2 slide 22: The MIPS instruction shown is `add $s3,$s3,1` but the opcode in the binary encoding is `001000` which is actually the `addi` (add immediate) opcode, not `add` (which is `000000` with funct `100000`). Additionally, the register fields in the binary are `01011` (= register 11 = `$t3`), but the assembly mnemonic references `$s3` (= register 19 = `10011`). The assembly mnemonic and the binary encoding are inconsistent in both the opcode and the register numbers.
 -->
