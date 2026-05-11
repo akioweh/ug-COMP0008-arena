@@ -27,3 +27,9 @@ The other syllabuses (with suffixes):
 
 One good use case of the syllabus is to have the agent quiz you (or even teach you from scratch :skull:) over the entire
 module.
+
+## RAG?
+
+The whole point of this repo (the pre-processing of slides) is to NOT use RAG.  
+RAG is shit when details matter and sources are not super structured (e.g. lecture slides). why not just use the 1M
+context windows we've been having for a long time??
