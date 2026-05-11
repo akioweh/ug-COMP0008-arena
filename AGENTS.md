@@ -21,7 +21,7 @@ Learning outcomes (paraphrased): understand modern computer architecture (pipeli
 
 ## Default behaviour
 
-`materials/` is **mandatory context** — read every file in it in full at session start. The only exception is when the task at hand is clearly a **meta task** (see below) and so does not draw on the module content.
+`materials/` is **mandatory context** — (not including subfolders) read every file in it in full at session start . The only exception is when the task at hand is clearly a **meta task** (see below) and so does not draw on the module content.
 
 ## Meta tasks
 
