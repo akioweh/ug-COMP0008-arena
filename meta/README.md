@@ -7,7 +7,7 @@ Plumbing for **meta tasks** — workflows that maintain or extend the project it
 Each material type has a pair of folders: **originals → extracted/transcribed content** (token-inefficient PDFs → dense markdown).
 
 - `slides_original/` — original lecture slide decks (PDFs).
-- `slides_transcribed/` — faithful, lossless markdown transcripts of the slides.
+- `slides_transcribed/` — faithful, lossless markdown transcripts of the slides. Also contains `ERRORS.md`, a registry of known errors, inconsistencies, and inaccuracies in the **source slides themselves** (not transcription errors), discovered during audit. Each entry records severity, source location, and whether it is flagged inline in the corresponding transcript.
 - `books/` — original textbook chapters (PDFs).
 - `books_topics/` — extracted per-chapter and per-week topic lists distilled from the readings.
 
