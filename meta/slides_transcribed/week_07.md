@@ -1,6 +1,6 @@
 > Source: [COMP0008\_07.pdf](../slides_original/COMP0008_07.pdf)
 
-# Week 7: Introduction to Concurrency and Threads
+# Week 7 — Concurrency and Threads
 
 ## Recap: From Architecture to Concurrency
 

@@ -1,6 +1,6 @@
 > Source: [COMP0008\_06\_1.pdf](../slides_original/COMP0008_06_1.pdf), [COMP0008\_06\_2.pdf](../slides_original/COMP0008_06_2.pdf)
 
-# Week 6: Introduction to Concurrency — Executing MIPS Code in a Single-Core Processor
+# Week 6 — Executing MIPS Code in a Single-Core Processor
 
 This is the first week of the concurrency half of the module. The overarching theme is **opportunities and perils of modern hardware from the programmer's perspective**. Week 6 focuses on concurrency at the hardware level: how MIPS code executes in a pipelined single-core processor, how memory interaction (especially caching) creates subtle issues, and why these hardware realities matter for software correctness.
 

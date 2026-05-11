@@ -1,6 +1,6 @@
 > Source: [COMP0008\_04.pdf](../slides_original/COMP0008_04.pdf)
 
-# High-Level Language Constructs in MIPS Assembly
+# Week 4 — High-Level Language Constructs in MIPS Assembly
 
 Previous weeks covered all key R-format and I-format MIPS instructions at a low level: their representation as 32-bit machine code words, and how the machine executes them by manipulating bits and bytes in registers and memory. This week examines how high-level language constructs (arrays, conditionals, loops, functions) are compiled into MIPS assembly, and introduces the final instruction format — J-type — used for jumps and function calling.
 

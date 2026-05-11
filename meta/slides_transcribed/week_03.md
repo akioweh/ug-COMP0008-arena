@@ -1,6 +1,6 @@
 > Source: [COMP0008\_03\_pre\_1.pdf](../slides_original/COMP0008_03_pre_1.pdf), [COMP0008\_03\_1.pdf](../slides_original/COMP0008_03_1.pdf), [COMP0008\_03\_2.pdf](../slides_original/COMP0008_03_2.pdf)
 
-# MIPS32 Processor — ISA and Instructions
+# Week 3 — MIPS32 Processor: ISA and Instructions
 
 Background reading: Patterson & Hennessey, Chapter 2 (especially Section 2.3). Chapter 2 is best read after covering high-level language compilation, as it synthesises many topics together.
 
