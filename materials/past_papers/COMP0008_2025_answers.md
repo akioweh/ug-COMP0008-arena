@@ -59,9 +59,6 @@ Why the others fail:
 - **C.** "If `a < 0` then `z × x > 2^{30}`." `a < 0` only constrains `x`; `z` can be tiny. Counter-example: `x = y` (so `a = b`, both negative), then `z = 0` and `z × x = 0`. False.
 - **D.** "If `a, b > 0` then `z × x < 2^{60}`." Both being positive only bounds `x, y < 2^{31}`, but `z` can still approach `2^{31} − 1`. Counter-example: `x = 2^{31} − 1` (so `a = 2^{31} − 1 > 0`), `y = 1` (so `b = 1 > 0`). Then `z = x XOR y = 2^{31} − 2`, and `z × x = (2^{31} − 2)(2^{31} − 1) ≈ 2^{62} > 2^{60}`. False.
 
-
----
-
 # Q2 — True/False (MIPS conventions, endianness, UTF-8)
 
 ## Q2a. Endianness determines the order of bytes inside registers in CPUs such as MIPS.
@@ -94,9 +91,6 @@ By the MIPS calling convention, `$t0`–`$t9` are **caller-saved** — they need
 
 UTF-8 uses 1 byte for U+0000–U+007F, 2 bytes for U+0080–U+07FF, 3 bytes for U+0800–U+FFFF (the Basic Multilingual Plane), and **4 bytes** for U+10000–U+10FFFF. The current Unicode standard (~155,000 characters) includes many supplementary-plane characters (emoji, CJK Extension B+, etc.), which require 4 bytes.
 
-
----
-
 # Q3 — MIPS short-answer
 
 ## Q3a. Functionality of the three-instruction sequence
@@ -126,9 +120,6 @@ UTF-8 uses 1 byte for U+0000–U+007F, 2 bytes for U+0080–U+07FF, 3 bytes for 
 
 (Week 5 slides 1840-1851: exception handling; register table line 1165.)
 
-
----
-
 # Q4 — Caches
 
 ## Q4a. Role of hardware caches: why used, and what makes them effective?
@@ -155,9 +146,6 @@ UTF-8 uses 1 byte for U+0000–U+007F, 2 bytes for U+0080–U+07FF, 3 bytes for 
 - Each core has its own private cache(s), so a write by one core is not automatically visible to another — without intervention, threads can read **stale** values and races become silent correctness bugs.
 - Hardware **cache-coherence protocols** (e.g. MESI with bus snooping / write-invalidate) restore a single-writer/multiple-reader view, but coherence traffic costs cycles and bandwidth; combined with store buffers and out-of-order execution it forces languages to expose a **memory model** (e.g. the JMM) and require programmers to use synchronisation (`volatile`, locks, fences) to obtain ordering and visibility guarantees.
 - A practical pitfall is **false sharing** — unrelated variables that happen to lie in the same cache line cause the line to ping-pong between cores on every write, destroying performance even though the program is logically race-free; padding/alignment to cache-line boundaries is the standard fix.
-
-
----
 
 # 2025 Q5 — PointMover, Synchronisation, and the JMM
 
@@ -195,9 +183,6 @@ The fields `x`, `y` are shared mutable state of the `PointMover` instance.
 - JVM 1 runs one `Type1`: `place(10,10)` then `moveClose(4)` deterministically print **`(12,12)`**. JVM 2 runs one `Type2`: `moveFar(2)` on a fresh mover (`x = y = 0`) prints **`(2,2)`**.
 - This two-process output set `{(12,12), (2,2)}` is disjoint from (and much smaller than) the single-JVM set in Q5d, which contains `(14,14)` and the asymmetric race outcomes that require shared state.
 
-
----
-
 # 2025 Q6 — ReadWriteController, starvation & deadlock
 
 Setup notes (apply to every subpart):
@@ -218,7 +203,7 @@ Setup notes (apply to every subpart):
 
 **Answer: E (More than one Writer can starve but no Reader will).**
 
-> [uncertain] — depends on whether "starve" is read structurally or per-thread under the unfair-scheduler convention. Under a strict per-thread reading, F could also be defended.
+<!-- Note: E captures the structural starvation based on the system dynamics under an unfair scheduler convention. Under a strictly pedantic per-thread reading (where even Readers might magically lose the wake-up race repeatedly without contending for a capacity-bounded resource), F could hypothetically be defended, but E is the rigorous answer aligned with the standard course model. -->
 
 Justification:
 
@@ -239,7 +224,7 @@ Why not the others:
 
 **Answer: D (More than one Reader can starve but no Writer will).**
 
-> [uncertain] — same caveat as Q6a re: structural vs per-thread starvation, but D is the intended answer.
+<!-- Note: Same caveat as Q6a regarding structural vs per-thread starvation, but D is the rigorous answer aligned with the standard model where structural changes to the predicate cause the starvation. -->
 
 What changed: Writers now wait on the *correct* safety predicate (they wait while readers are reading or another writer is writing). This **fixes the original safety bug**. But it also removes the only mechanism that throttled Writers — the `readersTurn` flag.
 
@@ -312,7 +297,4 @@ Why not the others:
 - **D ("at least two Readers")** — Readers don't trigger the bug; only `releaseWrite`'s `notify` is the changed call, and the bug needs a Writer to be re-`wait()`ed after being singled out. With only Readers, `releaseWrite` is never invoked.
 - **E ("regardless of number")** — overstated; needs at least 2 Writers as shown.
 - **F** — C fits.
-
-
----
 

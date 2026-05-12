@@ -53,9 +53,6 @@ Why not the other options:
 - C is wrong: the "near boundary" case above is a counterexample.
 - (D trivially wrong — red herring.)
 
-
----
-
 # 2023 Q2 — GB's Logarithmic Number System
 
 ## Setup
@@ -90,34 +87,20 @@ This is *uniform* across the entire range $[1, R]$ — a direct consequence of g
 
 ## Q2a — Which statement is FALSE?
 
-**Answer: D**
+**Answer: C**
+(Note: D is also widely considered an intended exam answer due to poor phrasing, but C is mathematically false.)
 
-### Why D is false
+### Rigorous reasoning
 
-D claims: "If $r \leq \sqrt{R}$ then $b^x \leq r$ for all representations $x \leq 2^{30}$."
+**A) True.** For $r \in [1, R]$, taking $x = \lceil \log_b r \rceil$ ensures $b^{x-1} \leq r \leq b^x$. Multiplying by $b$ gives $b^x \leq r \cdot b$. Thus $b^x \in [r, r \cdot b]$. Since this interval maps to a length of exactly $1$ in log-space ($[\log_b r, \log_b r + 1]$), it is mathematically guaranteed to contain at least one integer.
 
-Counterexample: take $r = 1$ (which satisfies $r \leq \sqrt{R}$ trivially). Then we need $b^x \leq 1$ for **every** $x \in \{0, 1, \dots, 2^{30}\}$. But $b > 1$, so for any $x \geq 1$ we have $b^x > 1 = r$. In particular $b^{2^{30}} = R^{2^{30}/(2^{32}-1)} \approx R^{1/4} \approx (3.4 \times 10^{38})^{1/4} \approx 7.6 \times 10^9 \gg 1$. So the universal quantifier "for all $x \leq 2^{30}$" fails.
+**B) True.** By rounding $\log_b r$ to the closest integer $x$, the difference $|x - \log_b r| \leq 0.5$. In the exponent space, this translates to $\frac{1}{\sqrt{b}} \leq \frac{b^x}{r} \leq \sqrt{b}$. The relative error $\left|\frac{b^x}{r} - 1\right|$ is therefore bounded by $\max(\sqrt{b}-1, 1-\frac{1}{\sqrt{b}}) = \sqrt{b}-1$. Because $\sqrt{b}-1 < \sqrt{b}$, the relative error strictly falls within $[0, \sqrt{b}]$.
 
-More generally, the statement is essentially backward: $\sqrt{R} = b^{(2^{32}-1)/2} \approx b^{2^{31}}$, so $r \leq \sqrt{R}$ only tells us $r \leq b^{2^{31}}$, i.e. the values of $x$ with $b^x \leq r$ form a *prefix* $\{0, 1, \dots, x_\max\}$ with $x_\max$ as large as $\sim 2^{31}$, not as small as $2^{30}$. The bound "$x \leq 2^{30}$" has no relationship to "$b^x \leq r$".
+**C) False.** The interval $b^x \in [\frac{r}{\sqrt{b}}, r]$ translates in log-space to $x \in [\log_b r - 0.5, \log_b r]$. This interval has a length of exactly **0.5**. An interval of length 0.5 on the real number line does *not* always contain an integer. For example, if $r = b^{0.9}$, the valid range for $x$ is $[0.4, 0.9]$, which contains no integers. Therefore, there is no valid representation $x$ that satisfies this condition for all $r$.
 
-### Why A, B, C are true
+**D) False (but likely intended).** If $r=1$, the claim "$b^x \leq 1$ for all $x \leq 2^{30}$" fails immediately, because $b > 1$, so for any $x \geq 1$, $b^x > 1$. However, this is a mangled phrasing of the property $x \le 2^{30} \implies b^x \le \sqrt{R}$ (since $b^{2^{30}} \approx R^{1/4} \ll R^{1/2}$).
 
-**A)** For $r \in [1, R)$, let $x = \lfloor \log_b r \rfloor$. Then $b^x \leq r < b^{x+1}$, so $b^x \in [r/b, r] \subseteq [\text{a value} \leq r, r]$ — wait, A asks for $b^x \in [r, r \cdot b]$, i.e. the *upper* endpoint of the bracket. Take instead $x = \lceil \log_b r \rceil$: then $b^{x-1} \leq r \leq b^x$, hence $b^x \in [r, b \cdot r]$ (since $b^x \leq b \cdot b^{x-1} \leq b \cdot r$). At $r = R$, take $x = 2^{32}-1$, giving $b^x = R \in [R, R \cdot b]$. True.
-
-**B)** $\sqrt{b} \approx 1.0000000103$, so the interval $[0, \sqrt{b}]$ contains essentially $[0, 1]$ — it includes every possible relative error (which is always $\leq \sqrt{b} - 1 \ll \sqrt{b}$). True trivially.
-
-**C)** Dual of A. For $r \in (1, R]$, take $x = \lfloor \log_b r \rfloor$: then $b^x \leq r$ and $b^x \geq b^{\log_b r - 1} = r/b \geq r/\sqrt{b}$ … this needs a tighter argument. Take $x$ such that $b^x$ is the closer of $\{b^{\lfloor \log_b r \rfloor}, b^{\lceil \log_b r \rceil}\}$ on the *lower* side: by the worst-case analysis above, the nearest representable on either side is within a factor $\sqrt{b}$ of $r$; the lower neighbour $b^{\lfloor \log_b r \rfloor}$ satisfies $b^{\lfloor \log_b r \rfloor} \geq r/b \geq r/\sqrt{b}$ when $r$ is in the lower half of its bracket, and otherwise $b^{\lceil \log_b r \rceil}$ would lie in $[r, r\sqrt{b}]$ but that is excluded by the asked range. The precise constructive choice: $x = \lfloor \log_b r \rfloor$ gives $b^x \in [r/b, r]$, and since $b < \sqrt{b}^2$… in fact $r/b \geq r/\sqrt{b}$ is **false** (because $b > \sqrt{b}$). The correct reading: pick $x$ such that $r/\sqrt{b} \leq b^x \leq r$; this is possible iff there exists an integer $x$ with $\log_b r - \tfrac{1}{2} \leq x \leq \log_b r$, i.e. iff $\lfloor \log_b r \rfloor \geq \log_b r - \tfrac{1}{2}$, which holds whenever the fractional part of $\log_b r$ is $\leq \tfrac{1}{2}$. For $r$ in the upper half of its bracket this works directly; for $r$ in the lower half, $r$ itself is within $\sqrt{b}$ of $b^{\lfloor \log_b r \rfloor}$, but the rounding-down requirement only needs $b^x \in [r/\sqrt{b}, r]$, which the *lower* neighbour satisfies when $r \leq \sqrt{b} \cdot b^{\lfloor \log_b r \rfloor}$. So C holds for half the bracket directly and for the other half via the lower neighbour being within $r/\sqrt{b}$. The statement is true (subject to the standard rounding-down interpretation).
-
-> [uncertain] C is intended as the symmetric "round-down" counterpart of A, and the examiner's intended answer is that C is true. The strictly rigorous version requires $b^x \in [r/\sqrt{b}, r]$, which holds because the lower representable neighbour $b^{\lfloor \log_b r \rfloor}$ is at most a factor $b < \sqrt{b}^{\,2}$ below $r$ — so it lies in $[r/b, r] \subseteq [r/\sqrt{b}, r]$ is false in general (since $b > \sqrt{b}$). However, the closer of the two neighbours is within $\sqrt{b}$ of $r$, and if that closer one is $\leq r$ we are done. The only failure case would be a value $r$ strictly in the lower half of its bracket where the lower neighbour is more than $\sqrt{b}$ below $r$ — but that contradicts "lower half". So C is true. D is unambiguously the false statement.
-
-### Summary
-
-| Option | True / False | Reason |
-|---|---|---|
-| A | True | $\lceil \log_b r \rceil$ works. |
-| B | True | Actual relative error $\leq \sqrt{b}-1 \ll \sqrt{b}$. |
-| C | True | Round-down version of A; lower neighbour suffices. |
-| **D** | **False** | $r = 1$ counterexample: $b^x > 1$ for all $x \geq 1$. |
+<!-- Note: Both C and D are literally false. D's failure is trivial and immediate (counterexample r=1), which might make it the "intended" answer by a careless examiner. However, C fails on a structural, mathematical mechanism of logarithmic number systems, making C the rigorous mathematical falsehood. -->
 
 ---
 
@@ -161,12 +144,7 @@ GB's logarithmic representation:
 
 This is the classic trade-off of a **logarithmic number system (LNS)** versus a floating-point representation. (external: LNS terminology, beyond module slides.)
 
----
 
-**Status:** Answered both subparts. Q2a = **D** (counterexample $r = 1$ shows $b^x > r$ for all $x \geq 1$, contradicting "$b^x \leq r$ for all $x \leq 2^{30}$"); Q2b = **C** (lower error for large reals — true; addition and floor are hard — true). The trickiest piece is the formal verification of Q2a-C, which I worked through and believe holds; I flagged the subtle point with `> [uncertain]` but the examiner's intended answer is unambiguously D.
-
-
----
 
 # 2023 Q3 — Count trailing zeros of `$t0`
 
@@ -285,9 +263,6 @@ For comparison, the naive right-shift loop (`andi $t2,$t0,1 ; bne $t2,$zero,done
 - `li $t0, 0xBABA0000`: MARS recognises that the low 16 bits are zero and emits a single `lui $t0, 0xBABA` (so the required first source line costs **1** executed instruction, not 2). If a marker prefers the worst-case assumption of 2 instructions, the total rises by 1 — still well within the binary-search budget.
 - Branch labels (`skip16`, `skip8`, `skip4`, `skip2`, `print`, `all_zero`) are forward references that MARS resolves before execution; no manual offset calculation is needed.
 - Syscall 1 prints the integer in `$a0`; syscall 10 cleanly terminates, so the only thing printed is the number itself (no trailing newline from the program, matching the "just the number" requirement).
-
-
----
 
 # 2023 Q4 — `Student` / `Module` / `Exam` concurrency
 
@@ -420,9 +395,6 @@ Concrete deadlock interleaving:
 Lock-order graph after the change has two edges: `Module -> Student` (via `registerStudent`) and `Student -> Module` (via `register`) — a cycle. The cycle is sufficient to make deadlock possible under an adversarial schedule.
 
 [3 marks]
-
-
----
 
 # 2023 Q5 — `WorkPlace` / `Worker` / `Checker`
 
@@ -561,7 +533,4 @@ So the substitution is **unsafe**.
 ## Status report
 
 Wrote `/home/akioweh/projects/ugnotes/COMP0008-arena/materials/past_papers/answers/2023/Q5.md` with all five subparts in the requested formats. Key findings: (a) lists deadlock, starvation, and missed/hijacked signal as real hazards (livelock is not); (b) the substitution throws `IllegalMonitorStateException` because `Checker.run()` doesn't hold its own monitor; (c) the friend is wrong — concrete counter-examples show empty and full states at print time due to non-fair monitor re-acquisition; (d) yes, a single Worker can wait in `put` then immediately in `get` within one loop iteration; (e) `notify()` is unsafe even without the Checker because of the classic hijacked-signal interaction between `put`-waiters and `get`-waiters on the shared queue.
-
-
----
 

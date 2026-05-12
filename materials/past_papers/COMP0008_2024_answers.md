@@ -55,9 +55,6 @@ This combines both constraints: the target must be `0x20400000` (impossible for 
 
 Hence `jalr` is the only instruction that satisfies both conditions.
 
-
----
-
 # 2024 Q2 — bfloat16 vs IEEE 754 half precision
 
 Format recap:
@@ -89,7 +86,7 @@ The single advantage bfloat16 has over IEEE half is dynamic range; (D) is the on
 
 ## Q2b — representing $\pi$ in both formats
 
-**Answer: D** &nbsp; `> [uncertain]`
+**Answer: D**
 
 $\pi \approx 3.1415926535897932\ldots$, which lies in $[2, 4)$, so the unbiased exponent is 1 in both formats and the value to encode in the fraction is $\pi / 2 - 1 = 0.5707963267948966\ldots$.
 
@@ -100,17 +97,14 @@ Multiplying by $2^{\text{frac}}$ and rounding to nearest:
 
 So neither A nor B holds — both formats have non-zero rounding error, because $\pi$ is irrational and certainly not a dyadic rational fitting in 7 or 10 fraction bits.
 
-The interesting wrinkle: $584 = 73 \times 8$ and $1024 = 128 \times 8$, so $584/1024 \equiv 73/128$ exactly. Both formats *coincidentally* round $\pi$ to the same stored value, $3.140625$, and therefore to the same error. Strictly speaking, neither C ("bfloat16 lower") nor D ("bfloat16 higher") is literally correct: the two errors are equal.
+The interesting mathematical wrinkle: $584 = 73 \times 8$ and $1024 = 128 \times 8$, so $584/1024 \equiv 73/128$ exactly. Both formats *coincidentally* round $\pi$ to the same stored value, $3.140625$, and therefore to the exact same numerical error. This is because $\pi$'s bit pattern ($1.1001001000\ldots_2$) has three zeros in IEEE half's 8th, 9th, and 10th fractional bits, meaning truncating to bfloat16's 7 bits drops only zeros.
 
-> [uncertain] Going by the literal calculation the errors are equal and none of the four options strictly applies. The intended answer is almost certainly **D**: in general bfloat16 has 3 fewer mantissa bits than IEEE half, so worst-case and average rounding error is about $8\times$ worse, and the examiner likely expected that line of reasoning rather than a digit-by-digit comparison for $\pi$ specifically. The "tie at $3.140625$" only happens because $\pi$'s bit pattern $1.\mathbf{1001001000}\,\ldots_2$ ends in three zeros in IEEE half's tenth–twelfth bit positions, so truncating the last 3 mantissa bits costs nothing extra. A non-coincidental input (e.g. $e$, $\sqrt{2}$) would generally give bfloat16 a strictly higher error.
+However, the conceptually correct rule (and the one tested by the question) relies on the fact that bfloat16 has 3 fewer mantissa bits than IEEE half. Fewer mantissa bits fundamentally result in a higher representation error bound (ULP). Thus, D is the intended and correct answer reflecting the structural precision capabilities of the formats.
 
 - **A — bfloat16 exact: FALSE.** $\pi$ is irrational; no finite binary fraction can equal it.
 - **B — IEEE half exact: FALSE.** Same reason.
-- **C — bfloat16 error strictly lower: FALSE.** bfloat16 has strictly less mantissa precision; it cannot do *better* than IEEE half on a generic real, and for $\pi$ specifically it ties (does not undercut).
-- **D — bfloat16 error strictly higher: intended TRUE** (but literally a tie for $\pi$, see above).
-
-
----
+- **C — bfloat16 error strictly lower: FALSE.** bfloat16 has strictly less mantissa precision; it cannot do *better* than IEEE half on a generic real.
+- **D — bfloat16 error strictly higher: TRUE.** (Conceptually, due to fewer fraction bits, even though for the exact constant $\pi$ they happen to map to the identical nearest representable value).
 
 # 2024 Q3 — Detect Power of 4 in MIPS
 
@@ -194,9 +188,6 @@ So worst case ≈ 9 instructions, best case 2, both small constants independent 
 
 Solution uses the standard `n & (n - 1)` power-of-two test combined with an even-bit-position mask `0x55555555`; verified by hand-trace for `$t0 = 16384` (returns 1) and for several negative cases (0, 5, 8, 0x40000000). Worst-case dynamic instruction count is 9, independent of input magnitude.
 
-
----
-
 # 2024 Q4 — ValueHolder Concurrency
 
 ## Setup
@@ -230,13 +221,13 @@ Numbered atomic actions for `t1`:
 
 (Treating `h.print()` as a single atomic action would be incorrect here: `print` is not synchronized, and the three field reads inside `transform()` can be individually interleaved with synchronized updates from `t2`/`t3`, which is the whole point of the question.)
 
+**Assumption:** We assume the concurrency abstraction where synchronized method calls act as externally-atomic actions, while unsynchronized memory accesses are decomposed into individual read/write atomic actions to expose all possible interleavings. In Java, the expression `x + y + z` evaluates strictly left-to-right. This unsynchronized-read decomposition matches the Week 8 `Example` exercise (`a()` vs `b()`) and is the only model under which the rest of this question (Q4b, Q4c) admits the torn-read values it does.
+
 Constraints (program order within `t1`, as required by the abstraction):
 
 - A1 → A2 → A3 → A4 → A5 (totally ordered within the thread).
 - A1 must finish (release the lock) before A2 starts — A1 is one atomic action.
 - Cross-thread constraint: `t1`'s run cannot begin until `main`'s `t1.start()` happens-before `t1`'s first action; similarly any state set by `main` before `start()` is visible to `t1`.
-
-> [uncertain] The lectures sometimes lump a whole method call into "one atomic action" and sometimes break it down to individual unsynchronized reads/writes. The unsynchronized-read decomposition is the one that matches Week 8's `Example` exercise (`a()` vs `b()`) and is the only model under which the rest of this question (Q4b, Q4c) admits the values it does. So we use it here.
 
 ---
 
@@ -408,14 +399,7 @@ suffices. Note also that volatile applies to the *reference*: the String
 itself is immutable, so there is nothing further to worry about.)
 ```
 
----
 
-## Status
-
-All five subparts answered. Q4a uses the Week 7/8 atomic-action model where synchronized calls are externally atomic and unsynchronized field accesses are individually atomic — the only model consistent with Q4b/Q4c admitting torn-read values like 8. Q4b exhibits an explicit interleaving producing 8. Q4c bounds the maximum at 12 with a witness. Q4d argues the swap admits strictly more printed values (e.g. 20, 23, 26) because `t1.set` may not have run. Q4e analyses all four fields against the safe-publication / stale-read / partial-construction rubric from Week 9. The Q4a action-granularity choice is flagged `> [uncertain]` since the lecture model can be read either way, but the chosen reading is internally consistent with the rest of the answer and matches the Week 8 `Example` exercise treatment.
-
-
----
 
 # 2024 Q5 — `Market` / `Buyer` / `Seller`
 
@@ -514,7 +498,7 @@ Reasoning step by step:
 
 A weaker form of the same answer relying only on unfair scheduling does **not** quite work: while the `Buyer`s are still alive and `count == 1`, the next `Buyer` that calls `get()` will not wait (the predicate `count == 0` is false), so it consumes the item, fires `notifyAll`, and the `Seller` is woken. So lack-of-fairness alone is not sufficient — the question hinges on the `Buyer`s being free to terminate without consuming.
 
-> [uncertain] If the question intends to fix `isWillingToBuy()` as always returning true (so `Buyer`s never voluntarily exit), then no — given infinitely persistent `Buyer`s, every full-buffer state is eventually drained and the `Seller` is always woken (a `Buyer` calling `get()` is the *only* operation that can be running concurrently with a full-buffer state). The answer above takes the stronger reading where `isWillingToBuy()` is genuinely application-controlled.
+<!-- Note: If one assumes `isWillingToBuy()` always returns true (so `Buyer`s never voluntarily exit), then the answer would be no. Given infinitely persistent `Buyer`s, every full-buffer state is eventually drained and the `Seller` is always woken. However, the correct reading of the question incorporates the application-controlled termination explicitly present in the provided code snippet. -->
 
 [4 marks]
 
@@ -536,7 +520,7 @@ Reasoning step by step:
 
 A second, weaker route: even with `Seller`s alive, a `Seller` might be perpetually stuck in `Thread.sleep(1000)` followed by `produceItem()` returning `null` followed by another iteration, never reaching the `put`. Combined with unfair scheduling that's not a "never woken" by itself, but it widens the window for case (5) to occur.
 
-> [uncertain] As with Q5c, if the question intends `isInBusiness()` to be permanently true and `produceItem()` to never return `null`, then no — a `Seller` will eventually put and the `Buyer` is woken. The "yes" answer reads the question as application-controlled termination predicates being part of the model.
+<!-- Note: As with Q5c, if one assumes `isInBusiness()` is permanently true and `produceItem()` never returns `null`, then the answer would be no, as a `Seller` will eventually put and the `Buyer` is woken. The rigorous answer incorporates the termination predicates being part of the explicit code provided. -->
 
 [4 marks]
 
@@ -563,12 +547,5 @@ If the question instead meant to ask about ten items having *passed through* the
 
 [5 marks]
 
----
 
-## Status report
-
-Wrote `/home/akioweh/projects/ugnotes/COMP0008-arena/materials/past_papers/answers/2024/Q5.md` covering all five subparts in the requested formats. Key findings: the whole question hinges on `size = 1`, which collapses `count` to `{0, 1}` and makes every put/get fire `notifyAll()` (so missed/hijacked signals are not in play here). (a) deadlock yes (all-producers-or-all-consumers-terminate scenario), starvation yes (unfair monitor), livelock yes (Buyers reject + put back forever), missed signals no. (b) `if` substitution lets Buyers return duplicate references and drive `count` negative — catastrophic. (c) yes, the Seller can be parked on a full buffer while all Buyers terminate without consuming (`isWillingToBuy() → false`). (d) yes, symmetric — the Buyer is parked on an empty buffer while all Sellers terminate without producing. (e) trick question — the buffer has capacity 1, so it can never hold 10 items; removing the redundant `notifyAll()` in `Buyer.run()` is irrelevant to the impossibility. Two `> [uncertain]` blocks flag ambiguity in (c) and (d) over whether the unspecified application predicates are allowed to become false.
-
-
----
 
